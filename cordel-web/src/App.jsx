@@ -10,6 +10,10 @@ function App() {
   const [isbn, setIsbn] = useState('')
   const [preco, setPreco] = useState('')
 
+  // --- AULA JS 1: Estado de Controle ---
+  // Se estiver null, estamos criando. Se tiver um número, estamos editando.
+  const [idEdicao, setIdEdicao] = useState(null)
+
   useEffect(() => {
     buscarLivros()
   }, [])
@@ -21,36 +25,70 @@ function App() {
       .catch(erro => console.error("Erro ao buscar:", erro))
   }
 
+  // --- AULA JS 2: A Função Híbrida (Serve pra criar e editar) ---
   function salvarLivro(event) {
     event.preventDefault()
-    const novoLivro = { titulo, nomeAutor: autor, isbn, preco: parseFloat(preco) }
+    
+    const dadosLivro = { 
+      titulo: titulo, 
+      nomeAutor: autor, 
+      isbn: isbn, 
+      preco: parseFloat(preco) 
+    }
 
-    fetch('http://localhost:8080/livros', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(novoLivro)
-    }).then(() => {
+    // SE temos um ID de edição, o caminho é PUT (Atualizar)
+    if (idEdicao !== null) {
+      fetch(`http://localhost:8080/livros/${idEdicao}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(dadosLivro)
+      }).then(() => {
+        alert("Livro atualizado com sucesso!")
         buscarLivros()
-        setTitulo(''); setAutor(''); setIsbn(''); setPreco('')
-    })
+        limparFormulario() // Importante: Voltar ao estado original
+      })
+
+    } else {
+      // SE NÃO temos ID, o caminho é POST (Criar Novo)
+      fetch('http://localhost:8080/livros', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(dadosLivro)
+      }).then(() => {
+        alert("Livro cadastrado com sucesso!")
+        buscarLivros()
+        limparFormulario()
+      })
+    }
   }
 
-  // --- NOVA FUNÇÃO: DELETAR ---
+  // --- AULA JS 3: Preparando o Terreno ---
+  // Pega o livro que foi clicado e joga os dados dele para cima (no form)
+  function prepararEdicao(livro) {
+    setTitulo(livro.titulo)
+    setAutor(livro.nomeAutor)
+    setIsbn(livro.isbn)
+    setPreco(livro.preco)
+    setIdEdicao(livro.id) // Ativa o "Modo Edição"
+  }
+
+  // Reseta tudo para o usuário poder cadastrar um novo depois de editar
+  function limparFormulario() {
+    setTitulo('')
+    setAutor('')
+    setIsbn('')
+    setPreco('')
+    setIdEdicao(null) // Desativa o "Modo Edição"
+  }
+
   function removerLivro(id) {
-    // 1. Confirmação do usuário (pra não apagar sem querer)
-    if (confirm("Tem certeza que deseja excluir este livro do sistema?")) {
-      
-      // 2. Chama o Back-end (Java) para apagar do banco
-      fetch(`http://localhost:8080/livros/${id}`, {
-        method: 'DELETE'
-      })
+    if (confirm("Tem certeza que deseja excluir este livro?")) {
+      fetch(`http://localhost:8080/livros/${id}`, { method: 'DELETE' })
       .then(() => {
-        // 3. SE deu certo no banco, atualizamos a tela VISUALMENTE.
-        // AULA JS: .filter cria uma nova lista ignorando o livro que tem esse ID
-        const novaLista = livros.filter(livro => livro.id !== id)
-        setLivros(novaLista)
+        // Se a pessoa deletar o livro que está editando, limpamos o form
+        if (id === idEdicao) limparFormulario()
+        setLivros(livros.filter(l => l.id !== id))
       })
-      .catch(erro => alert("Erro ao apagar!"))
     }
   }
 
@@ -59,13 +97,32 @@ function App() {
       <h1>Cordel do Saber</h1>
       
       <div className="card-form">
-        <h2>Novo Livro</h2>
+        {/* Muda o título dependendo do modo */}
+        <h2>{idEdicao ? 'Editando livro' : 'Novo livro'}</h2>
+        
         <form onSubmit={salvarLivro}>
-          <input placeholder="Título" value={titulo} onChange={e => setTitulo(e.target.value)} />
-          <input placeholder="Autor" value={autor} onChange={e => setAutor(e.target.value)} />
-          <input placeholder="ISBN" value={isbn} onChange={e => setIsbn(e.target.value)} />
-          <input placeholder="Preço" type="number" value={preco} onChange={e => setPreco(e.target.value)} />
-          <button type="submit">Cadastrar Livro</button>
+          <input placeholder="Título" value={titulo} onChange={e => setTitulo(e.target.value)} required />
+          <input placeholder="Autor" value={autor} onChange={e => setAutor(e.target.value)} required />
+          <input placeholder="ISBN" value={isbn} onChange={e => setIsbn(e.target.value)} required />
+          <input placeholder="Preço" type="number" step="0.01" value={preco} onChange={e => setPreco(e.target.value)} required />
+          
+          <div style={{display: 'flex', gap: '10px', justifyContent: 'center'}}>
+            <button type="submit">
+              {/* Ternário: Se editando, mostra "Salvar", se não, "Pendurar" */}
+              {idEdicao ? 'Salvar Alterações' : 'Cadastrar Livro'}
+            </button>
+
+            {/* Botão Cancelar: Só aparece se estiver editando */}
+            {idEdicao && (
+              <button 
+                type="button" 
+                onClick={limparFormulario}
+                style={{backgroundColor: '#6c757d'}}
+              >
+                Cancelar
+              </button>
+            )}
+          </div>
         </form>
       </div>
 
@@ -76,16 +133,22 @@ function App() {
             <p>{livro.nomeAutor}</p>
             <p className="preco">R$ {livro.preco}</p>
 
-            {/* --- NOVO BOTÃO DE EXCLUIR --- 
-                AULA JS: Usamos () => para a função não rodar sozinha ao carregar a página.
-            */}
-            <button 
-              onClick={() => removerLivro(livro.id)}
-              style={{ backgroundColor: '#ff6b6b', marginTop: '10px' }}
-            >
-              🗑️ Excluir
-            </button>
+            <div style={{display: 'flex', gap: '10px', marginTop: '10px'}}>
+              {/* Botão Editar: Chama a função que sobe os dados */}
+              <button 
+                onClick={() => prepararEdicao(livro)}
+                style={{backgroundColor: '#ffc107', color: '#000'}}
+              >
+                ✏️ Editar
+              </button>
 
+              <button 
+                onClick={() => removerLivro(livro.id)}
+                style={{backgroundColor: '#dc3545'}}
+              >
+                🗑️ Excluir
+              </button>
+            </div>
           </div>
         ))}
       </div>
