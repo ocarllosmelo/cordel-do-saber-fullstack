@@ -71,16 +71,15 @@ No terminal, entre na pasta da API:
 ```bash
 cd catalog-api
 ./mvnw spring-boot:run
-
+```
 ### 3. Iniciando o Front-end
 Abra um novo terminal, entre na pasta do site:
 cd cordel-web
 npm install
 npm run dev
 
-👨‍💻 Autor
+### 👨‍💻 Autor
 Desenvolvido por Carlos Melo.
 
-LinkedIn
-
-GitHub
+- LinkedIn
+- GitHub
