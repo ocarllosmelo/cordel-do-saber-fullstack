@@ -74,12 +74,14 @@ cd catalog-api
 ```
 ### 3. Iniciando o Front-end
 Abra um novo terminal, entre na pasta do site:
+```bash
 cd cordel-web
 npm install
 npm run dev
+```
 
 ### 👨‍💻 Autor
 Desenvolvido por Carlos Melo.
 
-- LinkedIn
-- GitHub
+* [LinkedIn](https://www.linkedin.com/in/carlos-alberto-2a35932bb)
+* [GitHub](https://github.com/ocarllosmelo)
