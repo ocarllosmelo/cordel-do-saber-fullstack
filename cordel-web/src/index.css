@@ -1,35 +1,205 @@
-/* Reset básico para tirar margens padrão do navegador */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+/* Reset básico */
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-/* O corpo do site: Cor de papel pardo e fonte escura */
+/* Corpo do site: Cor de papel pardo e fonte escura */
 body {
-  background-color: #f4e4bc; /* Um tom de bege/papel */
-  color: #2c1a0b; /* Um marrom bem escuro para o texto */
-  font-family: 'Courier New', Courier, monospace; /* Fonte monoespaçada estilo máquina de escrever */
-  line-height: 1.6;
+  background-color: #f4e4bc;
+  color: #2c1a0b;
+  font-family: 'Courier New', Courier, monospace; /* Fonte estilo máquina de escrever */
+  line-height: 1.4;
   min-height: 100vh;
+  padding: 20px 0; /* Um pouco de respiro em cima e embaixo */
 }
 
-/* Container principal para centralizar o conteúdo */
+/* --- CONTAINER PRINCIPAL (Mais largo agora) --- */
 .app-container {
-  max-width: 800px;
-  margin: 0 auto; /* Centraliza horizontalmente */
+  max-width: 1200px; /* AUMENTADO para caber mais livros lado a lado */
+  margin: 0 auto; /* Centraliza na tela */
   padding: 2rem;
   text-align: center;
-  border-left: 2px solid #2c1a0b; /* Bordas laterais para parecer uma folha */
-  border-right: 2px solid #2c1a0b;
-  min-height: 100vh;
-  background-color: #fdf6e3; /* Um tom ligeiramente mais claro no centro */
+  border-left: 3px solid #2c1a0b; /* Bordas mais grossas */
+  border-right: 3px solid #2c1a0b;
+  background-color: #fdf6e3; /* Papel mais claro no centro */
+  box-shadow: 0 0 20px rgba(0,0,0,0.1); /* Sombra para dar profundidade */
 }
 
 h1 {
-  font-size: 3rem;
+  font-size: 2.5rem;
   margin-bottom: 1rem;
   text-transform: uppercase;
-  border-bottom: 4px double #2c1a0b; /* Uma linha dupla embaixo do título */
+  border-bottom: 4px double #2c1a0b;
   padding-bottom: 1rem;
+  letter-spacing: 2px;
 }
+
+/* --- ÁREA DO FORMULÁRIO (CARD DE CIMA) --- */
+.card-form {
+  background-color: #e8d5b5; /* Um tom de papel diferente para destacar */
+  padding: 2rem;
+  border: 2px dashed #2c1a0b; /* Borda tracejada estilo costura */
+  margin-bottom: 3rem;
+  max-width: 700px; /* Formulário mais estreito e centralizado */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.card-form h2 { margin-bottom: 1rem; font-size: 1.5rem; }
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+/* --- CORREÇÃO DOS INPUTS (Para o texto ficar grande e legível) --- */
+.card-form input {
+  width: 100%;
+  padding: 12px;       /* Espaço interno confortável */
+  margin-bottom: 0;    /* O grid já cuida do espaço entre eles */
+  
+  border: 2px solid #2c1a0b; /* Borda escura e visível */
+  background-color: #ffffff; /* Fundo branco puro para contraste máximo */
+  color: #000000;            /* Texto PRETO para leitura perfeita */
+  
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1.2rem;   /* AUMENTADO: Fonte grande (quase tamanho 19px) */
+  font-weight: bold;   /* NEGRITO: Para a letra ficar mais "gorda" */
+  border-radius: 4px;
+}
+
+/* Opcional: Melhora o foco quando você clica para digitar */
+.card-form input:focus {
+  outline: none;
+  background-color: #fff8e1; /* Amarelo bem clarinho quando selecionado */
+  border-color: #d4a017;     /* Borda dourada */
+  box-shadow: 0 0 8px rgba(212, 160, 23, 0.5);
+}
+
+.card-form button {
+  padding: 10px 20px;
+  background-color: #2c1a0b; /* Botão escuro */
+  color: #f4e4bc; /* Texto claro */
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  text-transform: uppercase;
+  margin-top: 10px;
+  border-radius: 4px;
+}
+.card-form button:hover { background-color: #4a2c13; }
+
+/* --- BARRA DE BUSCA --- */
+.barra-busca {
+    max-width: 500px;
+    margin: 0 auto 30px auto; /* Centralizado e com margem embaixo */
+}
+.barra-busca input {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    border: 2px solid #2c1a0b;
+    border-radius: 25px; /* Bem arredondado */
+    background-color: #fffcf5;
+    text-align: center;
+    font-family: inherit;
+}
+
+/* --- ESTANTE DE LIVROS (GRID ESTILO PAULUS) --- */
+.lista-livros {
+  display: grid;
+  /* Tenta colocar 4 colunas, se não der, diminui. Mínimo de 220px por card */
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 25px; /* Espaço generoso entre os livros */
+  align-items: stretch;/* Todos os cards da linha ficam com a mesma altura*/
+}
+
+/* --- O CARTÃO DO LIVRO (VERTICAL E ALTO) --- */
+.livro-card {
+  background-color: #fffcf5;
+  border: 1px solid #2c1a0b;
+  border-radius: 6px;
+  padding: 1rem;
+  /* Altura 100% para ocupar toda a altura da linha do grid */
+  height: 100%; 
+  
+  /* Flexbox vertical para alinhar tudo no centro */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Espalha o conteúdo */
+  
+  box-shadow: 4px 4px 0px #2c1a0b; /* Sombra dura estilo xilogravura */
+  transition: transform 0.2s;
+  position: relative; 
+}
+
+.livro-card:hover {
+    transform: translateY(-5px); /* Sobe mais ao passar o mouse */
+    box-shadow: 6px 6px 0px #c0b090;
+    border-color: #000;
+}
+
+/* Área de Título e Autor (Topo do Card) */
+.livro-info-topo {
+    flex-grow: 1; /* Ocupa o espaço disponível no topo */
+    margin-bottom: 10px;
+}
+
+.livro-card h3 {
+  color: #2c1a0b;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+  line-height: 1.3;
+  font-weight: bold;
+}
+
+.livro-card p.autor {
+  color: #555; font-size: 0.9rem; font-style: italic; margin-bottom: 2px;
+}
+
+.livro-card p.isbn {
+    color: #999; font-size: 0.75rem;
+}
+
+/* Preço Gigante (Centro do Card) */
+.livro-card .preco {
+  font-size: 1.6rem; /* Bem grande */
+  color: #8b4513; /* Cor de destaque (ferrugem/marrom) */
+  font-weight: bold;
+  margin: 10px 0;
+  border-top: 1px dashed #ddd;
+  border-bottom: 1px dashed #ddd;
+  padding: 5px 0;
+}
+
+/* --- BOTÕES DE AÇÃO (EMPILHADOS NA BASE) --- */
+.acoes-card {
+  display: flex;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.acoes-card button {
+  flex: 1;
+  padding: 8px 0;
+  border: none;
+  font-weight: bold;
+  color: #2c1a0b;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-size: 0.85rem;
+  border: none;
+  display: flex; align-items: center; justify-content: center; gap: 5px;
+}
+
+/* Botão Editar (Amarelo Queimado) */
+.btn-editar {
+    background-color: #f7e4ad;
+}
+.btn-editar:hover { background-color: #e0a800; }
+
+/* Botão Excluir (Vermelho Cordel) */
+.btn-excluir {
+    background-color: #f36454;
+    color: white !important;
+}
+.btn-excluir:hover { background-color: #c0392b; }
