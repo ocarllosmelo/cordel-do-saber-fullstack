@@ -1,0 +1,18 @@
+# --- IGNORAR DO JAVA (BACKEND) ---
+**/target/
+**/.mvn/wrapper/maven-wrapper.jar
+**/*.class
+**/.idea/
+**/*.iml
+**/.settings/
+**/.classpath
+**/.project
+**/help.md
+
+# --- IGNORAR DO REACT (FRONTEND) ---
+**/node_modules/
+**/dist/
+**/build/
+**/.env
+**/.DS_Store
+**/coverage/

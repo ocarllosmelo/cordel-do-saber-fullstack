@@ -8,18 +8,18 @@ body {
   font-family: 'Courier New', Courier, monospace; /* Fonte estilo máquina de escrever */
   line-height: 1.4;
   min-height: 100vh;
-  padding: 20px 0; /* Um pouco de respiro em cima e embaixo */
+  padding: 20px 0;
 }
 
-/* --- CONTAINER PRINCIPAL (Mais largo agora) --- */
+/* CONTAINER PRINCIPAL */
 .app-container {
-  max-width: 1200px; /* AUMENTADO para caber mais livros lado a lado */
+  max-width: 1200px;
   margin: 0 auto; /* Centraliza na tela */
   padding: 2rem;
   text-align: center;
   border-left: 3px solid #2c1a0b; /* Bordas mais grossas */
   border-right: 3px solid #2c1a0b;
-  background-color: #fdf6e3; /* Papel mais claro no centro */
+  background-color: #fdf6e3; 
   box-shadow: 0 0 20px rgba(0,0,0,0.1); /* Sombra para dar profundidade */
 }
 
@@ -32,13 +32,13 @@ h1 {
   letter-spacing: 2px;
 }
 
-/* --- ÁREA DO FORMULÁRIO (CARD DE CIMA) --- */
+/* ÁREA DO FORMULÁRIO */
 .card-form {
   background-color: #e8d5b5; /* Um tom de papel diferente para destacar */
   padding: 2rem;
   border: 2px dashed #2c1a0b; /* Borda tracejada estilo costura */
   margin-bottom: 3rem;
-  max-width: 700px; /* Formulário mais estreito e centralizado */
+  max-width: 700px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -51,34 +51,33 @@ h1 {
   gap: 10px;
 }
 
-/* --- CORREÇÃO DOS INPUTS (Para o texto ficar grande e legível) --- */
 .card-form input {
   width: 100%;
-  padding: 12px;       /* Espaço interno confortável */
-  margin-bottom: 0;    /* O grid já cuida do espaço entre eles */
+  padding: 12px;       
+  margin-bottom: 0;   
   
-  border: 2px solid #2c1a0b; /* Borda escura e visível */
-  background-color: #ffffff; /* Fundo branco puro para contraste máximo */
-  color: #000000;            /* Texto PRETO para leitura perfeita */
+  border: 2px solid #2c1a0b; 
+  background-color: #ffffff; 
+  color: #000000;           
   
   font-family: 'Courier New', Courier, monospace;
-  font-size: 1.2rem;   /* AUMENTADO: Fonte grande (quase tamanho 19px) */
-  font-weight: bold;   /* NEGRITO: Para a letra ficar mais "gorda" */
+  font-size: 1.2rem;   
+  font-weight: bold;   
   border-radius: 4px;
 }
 
-/* Opcional: Melhora o foco quando você clica para digitar */
+/* Melhora o foco quando você clica para digitar */
 .card-form input:focus {
   outline: none;
-  background-color: #fff8e1; /* Amarelo bem clarinho quando selecionado */
-  border-color: #d4a017;     /* Borda dourada */
+  background-color: #fff8e1; 
+  border-color: #d4a017;    
   box-shadow: 0 0 8px rgba(212, 160, 23, 0.5);
 }
 
 .card-form button {
   padding: 10px 20px;
-  background-color: #2c1a0b; /* Botão escuro */
-  color: #f4e4bc; /* Texto claro */
+  background-color: #2c1a0b; 
+  color: #f4e4bc; 
   border: none;
   font-weight: bold;
   cursor: pointer;
@@ -88,38 +87,36 @@ h1 {
 }
 .card-form button:hover { background-color: #4a2c13; }
 
-/* --- BARRA DE BUSCA --- */
+/* BARRA DE BUSCA */
 .barra-busca {
     max-width: 500px;
-    margin: 0 auto 30px auto; /* Centralizado e com margem embaixo */
+    margin: 0 auto 30px auto;
 }
 .barra-busca input {
     width: 100%;
     padding: 12px;
     font-size: 1rem;
     border: 2px solid #2c1a0b;
-    border-radius: 25px; /* Bem arredondado */
+    border-radius: 25px;
     background-color: #fffcf5;
     text-align: center;
     font-family: inherit;
 }
 
-/* --- ESTANTE DE LIVROS (GRID ESTILO PAULUS) --- */
+/* ESTANTE DE LIVROS */
 .lista-livros {
   display: grid;
   /* Tenta colocar 4 colunas, se não der, diminui. Mínimo de 220px por card */
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 25px; /* Espaço generoso entre os livros */
+  gap: 25px;
   align-items: stretch;/* Todos os cards da linha ficam com a mesma altura*/
 }
 
-/* --- O CARTÃO DO LIVRO (VERTICAL E ALTO) --- */
 .livro-card {
   background-color: #fffcf5;
   border: 1px solid #2c1a0b;
   border-radius: 6px;
   padding: 1rem;
-  /* Altura 100% para ocupar toda a altura da linha do grid */
   height: 100%; 
   
   /* Flexbox vertical para alinhar tudo no centro */
@@ -138,9 +135,9 @@ h1 {
     border-color: #000;
 }
 
-/* Área de Título e Autor (Topo do Card) */
+/* Área de Título e Autor */
 .livro-info-topo {
-    flex-grow: 1; /* Ocupa o espaço disponível no topo */
+    flex-grow: 1; 
     margin-bottom: 10px;
 }
 
@@ -160,9 +157,9 @@ h1 {
     color: #999; font-size: 0.75rem;
 }
 
-/* Preço Gigante (Centro do Card) */
+/* Preço */
 .livro-card .preco {
-  font-size: 1.6rem; /* Bem grande */
+  font-size: 1.6rem;
   color: #8b4513; /* Cor de destaque (ferrugem/marrom) */
   font-weight: bold;
   margin: 10px 0;
@@ -171,7 +168,7 @@ h1 {
   padding: 5px 0;
 }
 
-/* --- BOTÕES DE AÇÃO (EMPILHADOS NA BASE) --- */
+/* BOTÕES DE AÇÃO */
 .acoes-card {
   display: flex;
   gap: 8px;
@@ -191,13 +188,13 @@ h1 {
   display: flex; align-items: center; justify-content: center; gap: 5px;
 }
 
-/* Botão Editar (Amarelo Queimado) */
+/* Botão Editar */
 .btn-editar {
     background-color: #f7e4ad;
 }
 .btn-editar:hover { background-color: #e0a800; }
 
-/* Botão Excluir (Vermelho Cordel) */
+/* Botão Excluir */
 .btn-excluir {
     background-color: #f36454;
     color: white !important;

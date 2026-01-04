@@ -47,7 +47,7 @@ function App() {
   }
 
   function removerLivro(id) {
-    if (confirm("Tem certeza que deseja rasgar este folheto do cordel?")) {
+    if (confirm("Tem certeza que deseja excluir este livro?")) {
       fetch(`http://localhost:8080/livros/${id}`, { method: 'DELETE' })
       .then(() => { if (id === idEdicao) limparFormulario(); setLivros(livros.filter(l => l.id !== id)) })
     }
@@ -63,9 +63,9 @@ function App() {
       <h1>Cordel do Saber</h1>
       
       <div className="card-form">
-        <h2>{idEdicao ? 'Editando Folheto' : 'Novo Folheto'}</h2>
+        <h2>{idEdicao ? 'Editando Livro' : 'Novo Livro'}</h2>
         <form onSubmit={salvarLivro}>
-          {/* DIV NOVA: Agrupa os inputs em grid de 2 colunas */}
+          {/* Agrupa os inputs em grid de 2 colunas */}
           <div className="form-grid">
               <input placeholder="Título do Livro" value={titulo} onChange={e => setTitulo(e.target.value)} required />
               <input placeholder="Nome do Autor" value={autor} onChange={e => setAutor(e.target.value)} required />
@@ -74,16 +74,16 @@ function App() {
           </div>
           
           <div style={{display: 'flex', gap: '10px', justifyContent: 'center', marginTop: '10px'}}>
-            <button type="submit">{idEdicao ? 'Salvar Alterações' : 'Pendurar no Cordel'}</button>
+            <button type="submit">{idEdicao ? 'Salvar Alterações' : 'Salvar Livro'}</button>
             {idEdicao && <button type="button" onClick={limparFormulario} style={{backgroundColor: '#6c757d', color: 'white'}}>Cancelar</button>}
           </div>
         </form>
       </div>
 
-      {/* Barra de Busca com nova classe */}
+      {/* Barra de Busca */}
       <div className="barra-busca">
         <input 
-          placeholder="🔍 Buscar folheto por título ou autor..." 
+          placeholder="🔍 Buscar livro por título ou autor..." 
           value={busca}
           onChange={e => setBusca(e.target.value)}
         />
@@ -92,14 +92,14 @@ function App() {
       <div className="lista-livros">
         {livrosFiltrados.map(livro => (
           <div key={livro.id} className="livro-card">
-            {/* Agrupamos o topo para facilitar o alinhamento vertical */}
+            {/* Agrupando o topo para facilitar o alinhamento vertical */}
             <div className="livro-info-topo">
               <h3>{livro.titulo}</h3>
               <p className="autor">{livro.nomeAutor}</p>
               <p className="isbn">ISBN: {livro.isbn}</p>
             </div>
             
-            {/* Preço bem grande no meio */}
+            {/* Preço no meio */}
             <p className="preco">R$ {livro.preco.toFixed(2)}</p>
 
             {/* Botões empilhados na base */}
@@ -116,7 +116,7 @@ function App() {
         
         {livrosFiltrados.length === 0 && (
           <p style={{gridColumn: '1 / -1', textAlign: 'center', color: '#666', fontSize: '1.2rem', marginTop: '2rem'}}>
-            Nenhum folheto encontrado no varal... 🌵
+            Nenhum livro encontrado... 🌵
           </p>
         )}
       </div>
